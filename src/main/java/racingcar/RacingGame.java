@@ -3,7 +3,9 @@ package racingcar;
 import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -24,7 +26,7 @@ public class RacingGame {
         String carNamesInput = getCarNamesInput();
         // 2. 유효성 검증 기능
         validateCarNamesInputFormat(carNamesInput);//자동차 이름 형식 유효성 검증 기능
-        validateCarNameLengths(carNamesInput);//자동차 이름 길이 유효성 검증 기능
+        validateCarName(carNamesInput);//자동차 이름 길이, 중복, 공백 검증 기능
 
         String tryCountInput = getTryCountInput();
         int tryCount = validateTryCount(tryCountInput);//시도 횟수 검증 기능
@@ -63,12 +65,33 @@ public class RacingGame {
         }
     }
 
-    // 자동차 이름 길이 검증 기능
-    private void validateCarNameLengths(String carNamesInput) {
+    // 자동차 이름 길이, 중복, 공백 검증 기능
+    private void validateCarName(String carNamesInput) {
         String[] carNames = carNamesInput.split(",");
+        Set<String> uniqueNames = new HashSet<>();
+
+        if (carNames.length == 0 || carNamesInput.isEmpty()) {
+            // carNamesInput.isEmpty() -> 아무것도 입력하지 않은 경우
+            // carNames.length == 0 -> 쉼표만 입력한 경우 (split 결과가 빈 배열)
+            throw new IllegalArgumentException("자동차 이름이 입력되지 않았습니다.");
+        }
+
         for (String name : carNames) {
-            if (name.length() > MAX_NAME_LENGTH) {
+            String trimmedName = name.trim();
+
+            // 이름 길이 검증
+            if (trimmedName.length() > MAX_NAME_LENGTH) {
                 throw new IllegalArgumentException("자동차 이름은 5자 이하만 가능합니다.");
+            }
+
+            // 공백/빈 문자열 검증
+            if (trimmedName.isEmpty()) {
+                throw new IllegalArgumentException("자동차 이름은 공백이거나 비어있을 수 없습니다.");
+            }
+
+            // 중복 검증
+            if (!uniqueNames.add(trimmedName)) {
+                throw new IllegalArgumentException("자동차 이름은 중복될 수 없습니다.");
             }
         }
     }
