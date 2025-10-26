@@ -50,6 +50,68 @@ class ApplicationTest extends NsTest {
             );
         });
     }
+    @Test
+    void 이름이_쉼표로_끝나는_경우_예외_발생() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> run("pobi,woni,jun,", "1"))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("자동차 이름은 쉼표(,)로 끝날 수 없습니다.")
+        );
+    }
+
+    @Test
+    void 이름이_5자를_초과하는_경우_예외_발생() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> run("pobi,woni,javaji", "1"))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("자동차 이름은 5자 이하만 가능합니다.")
+        );
+    }
+
+    @Test
+    void 이름이_공백인_경우_예외_발생() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> run("pobi, ,woni", "1")) // " " (공백)
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("자동차 이름은 공백이거나 비어있을 수 없습니다.")
+        );
+    }
+
+    @Test
+    void 이름이_비어있는_경우_예외_발생() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> run("pobi,,woni", "1")) // "" (빈 문자열)
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("자동차 이름은 공백이거나 비어있을 수 없습니다.")
+        );
+    }
+
+    @Test
+    void 이름이_중복되는_경우_예외_발생() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> run("pobi,woni,pobi", "1"))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("자동차 이름은 중복될 수 없습니다.")
+        );
+    }
+
+    @Test
+    void 시도_횟수가_숫자가_아닌_경우_예외_발생() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> run("pobi,woni", "a")) // "a" (숫자 아님)
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("시도 횟수는 숫자여야 합니다.")
+        );
+    }
+
+    @Test
+    void 시도_횟수가_1보다_작은_경우_예외_발생() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> run("pobi,woni", "0")) // "0" (1 미만)
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("시도 횟수는 1 이상이어야 합니다.")
+        );
+    }
 
 
     @Override
