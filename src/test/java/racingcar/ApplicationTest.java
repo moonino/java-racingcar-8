@@ -50,6 +50,8 @@ class ApplicationTest extends NsTest {
             );
         });
     }
+
+    // 유효성 검증 및 예외 처리 기능 구현 테스트
     @Test
     void 이름이_쉼표로_끝나는_경우_예외_발생() {
         assertSimpleTest(() ->
@@ -110,6 +112,56 @@ class ApplicationTest extends NsTest {
                 assertThatThrownBy(() -> run("pobi,woni", "0")) // "0" (1 미만)
                         .isInstanceOf(IllegalArgumentException.class)
                         .hasMessage("시도 횟수는 1 이상이어야 합니다.")
+        );
+    }
+
+    // 핵심 로직 구현 테스트
+    @Test
+    void 단독_우승자_판별_테스트() {
+        assertRandomNumberInRangeTest(
+                () -> {
+                    run("pobi,woni", "2");
+                    assertThat(output()).contains("최종 우승자 : pobi");
+                },
+                MOVING_FORWARD, STOP, // 1라운드
+                MOVING_FORWARD, STOP  // 2라운드
+        );
+    }
+
+    // 공동 우승자 테스트
+    @Test
+    void 공동_우승자_판별_테스트() {
+        assertRandomNumberInRangeTest(
+                () -> {
+                    run("pobi,woni", "2");
+                    assertThat(output()).contains("최종 우승자 : pobi, woni");
+                },
+                MOVING_FORWARD, MOVING_FORWARD, // 1라운드
+                STOP, STOP  // 2라운드
+        );
+    }
+
+    // 단일 라운드 진행 테스트
+    @Test
+    void 단일_라운드_진행_테스트() {
+        assertRandomNumberInRangeTest(
+                () -> {
+                    run("pobi,woni", "1");
+                    assertThat(output()).contains("최종 우승자 : pobi");
+                },
+                MOVING_FORWARD, STOP // 1라운드
+        );
+    }
+
+    // 모든 자동차가 정지하는 경우 테스트
+    @Test
+    void 모든_자동차가_정지하는_경우_테스트() {
+        assertRandomNumberInRangeTest(
+                () -> {
+                    run("pobi,woni,jun", "1");
+                    assertThat(output()).contains("최종 우승자 : pobi, woni, jun");
+                },
+                STOP, STOP, STOP // 1라운드
         );
     }
 
