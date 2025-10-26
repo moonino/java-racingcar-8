@@ -11,7 +11,11 @@ public class RacingGame {
     public void start() {
         // 1. 입력 기능 구현
         String carNamesInput = getCarNamesInput();
+        // 2. 유효성 검증 기능 구현
+        validateCarNamesInputFormat(carNamesInput);
+
         String tryCountInput = getTryCountInput();
+
 
         // (임시) 입력 확인 출력
         System.out.println("입력된 차 이름: " + carNamesInput);
@@ -29,5 +33,12 @@ public class RacingGame {
     private String getTryCountInput() {
         System.out.println("시도할 횟수는 몇 회인가요?");
         return Console.readLine();
+    }
+
+    // 자동차 이름 입력 형식 검증 기능
+    private void validateCarNamesInputFormat(String carNamesInput) {
+        if (carNamesInput.endsWith(",")) {
+            throw new IllegalArgumentException("자동차 이름은 쉼표(,)로 끝날 수 없습니다.");
+        }
     }
 }
