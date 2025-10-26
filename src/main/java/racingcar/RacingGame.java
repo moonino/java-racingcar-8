@@ -4,6 +4,7 @@ import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 자동차 경주 게임의 주 로직을 담당하는 클래스
@@ -33,6 +34,9 @@ public class RacingGame {
 
         // 경주 진행 기능
         runRace(cars, tryCount);
+
+        // 우승자 판별 기능
+        List<Car> winners = getWinners(cars);
 
     }
 
@@ -107,11 +111,31 @@ public class RacingGame {
         }
     }
 
-    // 주 진행 기능 (단일 라운드)
+    // 경주 진행 기능 (단일 라운드)
     private void runSingleRound(List<Car> cars) {
         for (Car car : cars) {
             tryMoveCar(car);
         }
+    }
+
+    // 우승자 판별 기능
+    private List<Car> getWinners(List<Car> cars) {
+        int maxPosition = getMaxPosition(cars);
+
+        return cars.stream()
+                .filter(car -> car.getPosition() == maxPosition)
+                .collect(Collectors.toList());
+    }
+
+    // 우승자 판별 기능 (자동차 리스트에서 가장 큰 position 값을 찾는 메소드)
+    private int getMaxPosition(List<Car> cars) {
+        int maxPosition = 0;
+        for (Car car : cars) {
+            if (car.getPosition() > maxPosition) {
+                maxPosition = car.getPosition();
+            }
+        }
+        return maxPosition;
     }
 }
 
