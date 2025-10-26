@@ -40,6 +40,8 @@ public class RacingGame {
         // 우승자 판별 기능
         List<Car> winners = getWinners(cars);
 
+        // 4. 출력 (최종 우승자)
+        printWinners(winners);
     }
 
     // 자동차 이름 입력 기능
@@ -147,6 +149,14 @@ public class RacingGame {
             System.out.println(car.getName() + " : " + car.getPositionString());
         }
         System.out.println();
+    }
+
+    private void printWinners(List<Car> winners) {
+        String winnerNames = winners.stream()
+                .map(Car::getName)
+                .collect(Collectors.joining(","));
+
+        System.out.println("최종 우승자 : " + winnerNames);
     }
 }
 
