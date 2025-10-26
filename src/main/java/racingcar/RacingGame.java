@@ -2,6 +2,9 @@ package racingcar;
 
 import camp.nextstep.edu.missionutils.Console;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 자동차 경주 게임의 주 로직을 담당하는 클래스
  */
@@ -20,10 +23,14 @@ public class RacingGame {
         String tryCountInput = getTryCountInput();
         int tryCount = validateTryCount(tryCountInput);//시도 횟수 검증 기능
 
+        // 3. 핵심 로직 (자동차 객체 생성)
+        List<Car> cars = createCars(carNamesInput);
 
-        // (임시) 입력 확인 출력
-        System.out.println("입력된 차 이름: " + carNamesInput);
-        System.out.println("입력된 횟수: "+ tryCount);
+        // (임시) 생성 확인
+        for (Car car : cars) {
+            System.out.println("생성된 차: " + car.getName());
+        }
+        System.out.println("시도 횟수: " + tryCount);
 
     }
 
@@ -46,7 +53,7 @@ public class RacingGame {
         }
     }
 
-    //자동차 이름 길이 검증 기능
+    // 자동차 이름 길이 검증 기능
     private void validateCarNameLengths(String carNamesInput) {
         String[] carNames = carNamesInput.split(",");
         for (String name : carNames) {
@@ -56,7 +63,7 @@ public class RacingGame {
         }
     }
 
-    //시도 횟수 검증 기능
+    // 시도 횟수 검증 기능
     private int validateTryCount(String tryCountInput) {
         int tryCount;
         try {
@@ -70,5 +77,16 @@ public class RacingGame {
         }
 
         return tryCount;
+    }
+
+    // 자동차 객체 생성 기능
+    private List<Car> createCars(String carNamesInput) {
+        List<Car> cars = new ArrayList<>();
+        String[] carNames = carNamesInput.split(",");
+
+        for (String name : carNames) {
+            cars.add(new Car(name));
+        }
+        return cars;
     }
 }
