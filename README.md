@@ -25,6 +25,14 @@
 
     - 각 자동차 이름이 5자 이하인지 검증하고, 초과 시 IllegalArgumentException을 발생시킨다.
 
+- [x] [추가] 자동차 이름 공백/빈 문자열 검증
+
+  - 이름이 공백(" ")이거나 빈 문자열("")일 경우 IllegalArgumentException 발생
+
+- [x] [추가] 자동차 이름 중복 검증
+
+  - 자동차 이름이 중복될 경우 IllegalArgumentException 발생
+
 - [x] 시도 횟수 검증 기능
 
     - 시도할 횟수가 숫자인지 검증하고, 숫자가 아닐 경우 IllegalArgumentException을 발생시킨다.
