@@ -31,11 +31,8 @@ public class RacingGame {
         // 3. 핵심 로직 (자동차 객체 생성)
         List<Car> cars = createCars(carNamesInput);
 
-        // (임시) 생성 확인
-        for (Car car : cars) {
-            System.out.println("생성된 차: " + car.getName());
-        }
-        System.out.println("시도 횟수: " + tryCount);
+        // 경주 진행 기능
+        runRace(cars, tryCount);
 
     }
 
@@ -102,4 +99,19 @@ public class RacingGame {
             car.move();
         }
     }
+
+    // 경주 진행 기능 (전체 라운드)
+    private void runRace(List<Car> cars, int tryCount) {
+        for (int i = 0; i < tryCount; i++) {
+            runSingleRound(cars);
+        }
+    }
+
+    // 주 진행 기능 (단일 라운드)
+    private void runSingleRound(List<Car> cars) {
+        for (Car car : cars) {
+            tryMoveCar(car);
+        }
+    }
 }
+
