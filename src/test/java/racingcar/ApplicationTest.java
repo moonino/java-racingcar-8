@@ -31,6 +31,27 @@ class ApplicationTest extends NsTest {
         );
     }
 
+    // 입력 기능 구현 테스트
+    @Test
+    void 정상_입력_시_프롬프트_출력_테스트() {
+        assertSimpleTest(() -> {
+            run("pobi,woni,jun", "2");
+
+            // 1. "입력 기능"에서 요구하는 프롬프트가 모두 출력되었는지 확인
+            assertThat(output()).contains(
+                    "경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)",
+                    "시도할 횟수는 몇 회인가요?"
+            );
+
+            // 2. "출력 기능"의 일부(실행 결과, 최종 우승자)까지 정상적으로 도달했는지 확인
+            assertThat(output()).contains(
+                    "실행 결과",
+                    "최종 우승자 : "
+            );
+        });
+    }
+
+
     @Override
     public void runMain() {
         Application.main(new String[]{});
