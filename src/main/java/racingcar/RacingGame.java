@@ -1,7 +1,7 @@
 package racingcar;
 
 import camp.nextstep.edu.missionutils.Console;
-
+import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +11,11 @@ import java.util.List;
 public class RacingGame {
 
     private static final int MAX_NAME_LENGTH = 5; // 이름 최대 길이 상수
+    // 전진 판단 기능 - 상수 추가
+    private static final int MOVE_FORWARD_CONDITION = 4; // 전진 조건
+    private static final int MIN_RANDOM_NUMBER = 0; // 랜덤 범위 최소값
+    private static final int MAX_RANDOM_NUMBER = 9; // 랜덤 범위 최대값
+
 
     //게임을 시작하는 메인 메서드
     public void start() {
@@ -88,5 +93,13 @@ public class RacingGame {
             cars.add(new Car(name));
         }
         return cars;
+    }
+
+    // 전진 판단 기능
+    private void tryMoveCar(Car car) {
+        int randomNumber = Randoms.pickNumberInRange(MIN_RANDOM_NUMBER, MAX_RANDOM_NUMBER);
+        if (randomNumber >= MOVE_FORWARD_CONDITION) {
+            car.move();
+        }
     }
 }
