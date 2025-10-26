@@ -177,7 +177,7 @@ public class RacingGame {
     private void printWinners(List<Car> winners) {
         String winnerNames = winners.stream()
                 .map(Car::getName)
-                .collect(Collectors.joining(","));
+                .collect(Collectors.joining(", "));
 
         System.out.println("최종 우승자 : " + winnerNames);
     }
