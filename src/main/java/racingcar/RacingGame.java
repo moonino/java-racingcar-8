@@ -32,6 +32,8 @@ public class RacingGame {
         // 3. 핵심 로직 (자동차 객체 생성)
         List<Car> cars = createCars(carNamesInput);
 
+        // 4. 결과 출력 (실행 결과 메시지)
+        System.out.println("\n실행 결과");
         // 경주 진행 기능
         runRace(cars, tryCount);
 
@@ -108,6 +110,7 @@ public class RacingGame {
     private void runRace(List<Car> cars, int tryCount) {
         for (int i = 0; i < tryCount; i++) {
             runSingleRound(cars);
+            printRoundResult(cars);
         }
     }
 
@@ -136,6 +139,14 @@ public class RacingGame {
             }
         }
         return maxPosition;
+    }
+
+    // 결과 출력 기능
+    private void printRoundResult(List<Car> cars) {
+        for (Car car : cars) {
+            System.out.println(car.getName() + " : " + car.getPositionString());
+        }
+        System.out.println();
     }
 }
 

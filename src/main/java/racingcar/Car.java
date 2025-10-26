@@ -19,7 +19,14 @@ public class Car {
         return position;
     }
 
+    // 자동차를 한 칸 전진하는 메소드
     public void move() {
         this.position++;
+    }
+
+    // 현재 position 값을 "-" 문자열로 변환하여 반환하는 메소드
+    // return 예: position이 3이면 "---" 반환
+    public String getPositionString() {
+        return "-".repeat(this.position);
     }
 }
