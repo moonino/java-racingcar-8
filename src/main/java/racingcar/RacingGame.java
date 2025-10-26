@@ -18,11 +18,12 @@ public class RacingGame {
         validateCarNameLengths(carNamesInput);//자동차 이름 길이 유효성 검증 기능
 
         String tryCountInput = getTryCountInput();
+        int tryCount = validateTryCount(tryCountInput);//시도 횟수 검증 기능
 
 
         // (임시) 입력 확인 출력
         System.out.println("입력된 차 이름: " + carNamesInput);
-        System.out.println("입력된 횟수: "+ tryCountInput);
+        System.out.println("입력된 횟수: "+ tryCount);
 
     }
 
@@ -53,5 +54,21 @@ public class RacingGame {
                 throw new IllegalArgumentException("자동차 이름은 5자 이하만 가능합니다.");
             }
         }
+    }
+
+    //시도 횟수 검증 기능
+    private int validateTryCount(String tryCountInput) {
+        int tryCount;
+        try {
+            tryCount = Integer.parseInt(tryCountInput);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("시도 횟수는 숫자여야 합니다.");
+        }
+
+        if (tryCount < 1) {
+            throw new IllegalArgumentException("시도 횟수는 1 이상이어야 합니다.");
+        }
+
+        return tryCount;
     }
 }

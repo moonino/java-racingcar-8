@@ -25,7 +25,7 @@
 
     - 각 자동차 이름이 5자 이하인지 검증하고, 초과 시 IllegalArgumentException을 발생시킨다.
 
-- [ ] 시도 횟수 검증 기능
+- [x] 시도 횟수 검증 기능
 
     - 시도할 횟수가 숫자인지 검증하고, 숫자가 아닐 경우 IllegalArgumentException을 발생시킨다.
 
