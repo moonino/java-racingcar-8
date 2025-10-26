@@ -128,7 +128,6 @@ class ApplicationTest extends NsTest {
         );
     }
 
-    // 공동 우승자 테스트
     @Test
     void 공동_우승자_판별_테스트() {
         assertRandomNumberInRangeTest(
@@ -141,7 +140,6 @@ class ApplicationTest extends NsTest {
         );
     }
 
-    // 단일 라운드 진행 테스트
     @Test
     void 단일_라운드_진행_테스트() {
         assertRandomNumberInRangeTest(
@@ -153,7 +151,6 @@ class ApplicationTest extends NsTest {
         );
     }
 
-    // 모든 자동차가 정지하는 경우 테스트
     @Test
     void 모든_자동차가_정지하는_경우_테스트() {
         assertRandomNumberInRangeTest(
@@ -162,6 +159,25 @@ class ApplicationTest extends NsTest {
                     assertThat(output()).contains("최종 우승자 : pobi, woni, jun");
                 },
                 STOP, STOP, STOP // 1라운드
+        );
+    }
+
+    // 출력 기능 구현 테스트
+    @Test
+    void 라운드별_결과_출력_테스트() {
+        // pobi: 4(전진) -> pobi : -
+        // woni: 3(정지) -> woni :
+        assertRandomNumberInRangeTest(
+                () -> {
+                    run("pobi,woni", "1");
+
+                    // "실행 결과" 문구 출력 검증
+                    assertThat(output()).contains("실행 결과");
+
+                    // 라운드별 결과 검증
+                    assertThat(output()).contains("pobi : -", "woni : ");
+                },
+                MOVING_FORWARD, STOP // 1라운드
         );
     }
 
